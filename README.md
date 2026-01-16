@@ -14,6 +14,10 @@ Mol Ecol. 2022;31(9):2730-2751. doi:10.1111/mec.16421
 
 We will follow the analysis steps as outlined in the paper, using tools introduced to us in the course or those of our own choice. 
 
+# Poster Link
+
+https://app.biorender.com/illustrations/6969014082c88e22eefb6cea?isPoster=true&slideId=fc4a1b24-1cc9-4d6f-beac-0e0912f79cd0
+
 
 ### INTRODUCTION: Understanding the article - terms, concepts and methods 
 
