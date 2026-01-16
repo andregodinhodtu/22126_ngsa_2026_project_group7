@@ -1,5 +1,12 @@
 # Project for course 22126 Next Generation Sequencing: group 7
 
+Set project directry as HOME in the server:
+
+```bash
+export HOME=/home/projects/22126_NGS/projects/group7/22126_ngsa_2026_project_group7
+cd
+```
+
 We are going to replicate the biological analysis workflow of the following scientific article:
 
 Thomas RC, Dunn JC, Dawson DA, et al. **Assessing rates of parasite coinfection and spatiotemporal strain variation via metabarcoding: Insights for the conservation of European turtle doves Streptopelia turtur.**
