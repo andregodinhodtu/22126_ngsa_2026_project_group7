@@ -60,7 +60,7 @@ Containing the sbatch header, paths and creates directories if missing.
 
 Start job by typing: `sbatch myfile.sbatch`
 
-check your job status: `squeue -u $USER`
+check your job status: `squeue --me`
 
 Cancel job: `scancel <job_id>`
 
@@ -70,7 +70,7 @@ Gets and runs each sample in the directive. Loop runs for the whole fastp comman
 
 #### 3. Fastp
 
-ultra fast all-in-one FASTQ preporcessor. It is used for quality control and preprocessing of our raw data. See more on: [fastp Manual](#0 "fastp Manual").
+ultra fast all-in-one FASTQ preporcessor. It is used for quality control and preprocessing of our raw data. See more on: [https://open.bioqueue.org/home/knowledge/showKnowledge/sig/fastp](#0){.uri}.
 
 #### 3.1. Input and Output files
 
@@ -182,4 +182,4 @@ fastp \
 done
 ```
 
-##  
+## 
