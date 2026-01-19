@@ -1,6 +1,12 @@
 # Pipeline carried to perform phylogenomics analysis 
 
-Analysis of the ITS Region Following the Original Study.
+Analysis of the ITS Region Following the Original Study
+
+The original study published its polished ITS region dataset on GenBank, which combined publicly available reference sequences with the authors’ processed data derived from their raw sequence analyses. The GenBank sequences referenced in the study were retrieved by the authors using specific keyword searches, after which representative sequences for each strain were selected. These sequences were used to construct Figure 1 in the original paper and served as the basis for the dataset utilized in this analysis.
+
+In the first stage of this work, the same dataset was retrieved and analyzed in order to replicate the results reported in the original publication and to verify the consistency of the methodology.
+
+In the second stage, a new dataset was constructed by combining the same GenBank reference sequences with results from independent analyses of the raw sequences. This dataset represented the newly generated data within the present study and was used to perform comparative analyses with the original findings.
 
 ## 1. Local alignment and trimming of fasta files - Script_01
 
