@@ -70,7 +70,7 @@ Gets and runs each sample in the directive. Loop runs for the whole fastp comman
 
 #### 3. Fastp
 
-ultra fast all-in-one FASTQ preporcessor. It is used for quality control and preprocessing of our raw data. See more on: [https://open.bioqueue.org/home/knowledge/showKnowledge/sig/fastp](#0){.uri}.
+ultra fast all-in-one FASTQ preporcessor. It is used for quality control and preprocessing of our raw data. See more on: [fastp manual](https://open.bioqueue.org/home/knowledge/showKnowledge/sig/fastp).
 
 #### 3.1. Input and Output files
 
