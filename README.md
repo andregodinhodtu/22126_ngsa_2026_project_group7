@@ -38,10 +38,9 @@ https://app.biorender.com/illustrations/6969014082c88e22eefb6cea?isPoster=true&s
 
 #### Use of Sanger sequencing
 
-In the article, Sanger sequencing is used before MiSeq sequencing. It was done individually on each parasite isolate to confirm which species are included and to have an initial look at ITS and Fe-hyd sequences. They used it to generate references, as it has higher confidence than MiSeq.
+In the article, Sanger sequencing was used on a subset of positive samples to later allow for validation of the HTS methods. The rest of the positive samples and 25 of the Sanger subset was then used to perform MiSeq sequencing. 
 
 The sequences read using Sanger are available in GenBank and we will be using them as reference sequences.
-
 
 
 #### Clarification of Fi5 and Ri7 indexes
