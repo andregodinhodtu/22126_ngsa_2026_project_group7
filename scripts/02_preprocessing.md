@@ -73,39 +73,159 @@ Which we removed by defining then and then removing them using:
 `-- adapter_sequence`,`--adapter_sequence_r2`
 
 #### 3.4. Trimming poly_g and ploy_x
+To remove poly_g chains commonly found in illumina sequences and poly_a chains. 
 
 `--trim_poly_g`,`--trim_poly_x`
 
-#### 3.5. cut_front and cut_tail
+#### 3.5.  --trim_front1 and cut_tail
+cut the first and last bases on the sequences. 
+trim_front1 with 10 positions trimmed was chosen based on looking at our sequences and alternatives like cut_front
+cut_tail removes bases with a quality score below 20 (default) from the 3' end. 
 
-`--cut_front`,`--cut_tail`
+` --trim_front1`,`--cut_tail`
 
 #### 3.6. specifying thread number, min_length and min Phred score
+Selected based on article requirements. 
 
 `-w 4`,`-l 100`,`-q 20`
 
 #### 3.7 Reporting as html and json file
+Get output as html and json.
 
 `-h`,`-j`
 
 #### 4. fastp: limiting to sequences at or above 250 bp
-
-[DESCRIBE DIFFERENCES]
+Done to follow procedure in article. 
+A new fastp command is run with these new commands. It limits sequences to only the songer sequences above 250 bp.
+It is seen in the last part of the sbatch files. 
 
 `-l 250`,`--disable_adapter_trimming`,`--disable_quality_filtering`,`-w 4`
 
 ## Fastp sbatch Script Trigonomas
 
 ```{bash}
+#!/bin/bash -l
+#SBATCH --job-name=fastp_trim
+#SBATCH --output=/home/projects/22126_NGS/projects/group7/22126_ngsa_2026_project_group7/scripts/log/slurm-%x.%j.out
+#SBATCH --error=/home/projects/22126_NGS/projects/group7/22126_ngsa_2026_project_group7/scripts/log/slurm-%x.%j.err
+#SBATCH -c 4
+#SBATCH --mem=10G
+#SBATCH --time=01:00:00
 
-# put new sbatch script for trigonomas
+set -euxo pipefail
+
+# Define Directories
+BASE_DIR="/home/projects/22126_NGS/projects/group7/22126_ngsa_2026_project_group7"
+FASTQ_DIR="${BASE_DIR}/data/data_raw/sra_fastq/trichomonas"
+OUT_DIR="${BASE_DIR}/data/preprocessing_fastq/trichomonas"
+REP_DIR="${BASE_DIR}/results/trim_merge_reports/"
+LOG_DIR="${BASE_DIR}/scripts/log"
+
+# Create directories if they don't exist
+mkdir -p "${OUT_DIR}"
+mkdir -p "${LOG_DIR}"
+
+for file in "${FASTQ_DIR}"/*_1.fastq.gz; do
+
+filename=$(basename "$file")
+sample="${filename%_1.fastq.gz}"
+
+ADAPTER_FWD="TCTACACGTTCAGAGTTCTACAGTCCGACGATC"
+ADAPTER_REV="GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT"
+
+# Run fastp
+fastp \
+  -i "${FASTQ_DIR}/${sample}_1.fastq.gz" \
+  -I "${FASTQ_DIR}/${sample}_2.fastq.gz" \
+  --merged_out "${OUT_DIR}/${sample}_merged.fastq.gz"\
+  --adapter_sequence "${ADAPTER_FWD}" \
+  --adapter_sequence_r2 "${ADAPTER_REV}" \
+  --trim_poly_g \
+  --trim_poly_x \
+  --trim_front1 10 \
+  --cut_tail \
+  -w 4 \
+  -l 100 \
+  -q 20 \
+  --merge \
+  -h "${REP_DIR}/trichomonas/${sample}.html" \
+  -j "${REP_DIR}/trichomonas/${sample}.json"
+
+fastp \
+  -i "${OUT_DIR}/${sample}_merged.fastq.gz" \
+  -o "${OUT_DIR}/${sample}_merged_250bp.fastq.gz" \
+  -l 250 \
+  --disable_adapter_trimming \
+  --disable_quality_filtering \
+  --disable_trim_poly_g \
+  -w 4 \
+  -h "${REP_DIR}/trichomonas/${sample}_merged_filter.html" \
+  -j "${REP_DIR}/trichomonas/${sample}_merged_filter.json"
+
+done
 
 ```
 
 ## Fastp sbatch Script Parasites
 
 ```{bash}
+#!/bin/bash -l
+#SBATCH --job-name=fastp_trim
+#SBATCH --output=/home/projects/22126_NGS/projects/group7/22126_ngsa_2026_project_group7/scripts/log/slurm-%x.%j.out
+#SBATCH --error=/home/projects/22126_NGS/projects/group7/22126_ngsa_2026_project_group7/scripts/log/slurm-%x.%j.err
+#SBATCH -c 4
+#SBATCH --mem=10G
+#SBATCH --time=01:00:00
 
-# new bash script for triginomas
+set -euxo pipefail
+
+# Define Directories
+BASE_DIR="/home/projects/22126_NGS/projects/group7/22126_ngsa_2026_project_group7"
+FASTQ_DIR="${BASE_DIR}/data/data_raw/sra_fastq/parasites"
+OUT_DIR="${BASE_DIR}/data/preprocessing_fastq/parasites"
+REP_DIR="${BASE_DIR}/results/trim_merge_reports"
+LOG_DIR="${BASE_DIR}/scripts/log"
+
+# Create directories if they don't exist
+mkdir -p "${OUT_DIR}"
+mkdir -p "${LOG_DIR}"
+
+for file in "${FASTQ_DIR}"/*_1.fastq.gz; do
+
+filename=$(basename "$file")
+sample="${filename%_1.fastq.gz}"
+
+ADAPTER_FWD="TCTACACGTTCAGAGTTCTACAGTCCGACGATC"
+ADAPTER_REV="GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT"
+
+# Run fastp
+fastp \
+  -i "${FASTQ_DIR}/${sample}_1.fastq.gz" \
+  -I "${FASTQ_DIR}/${sample}_2.fastq.gz" \
+  --merged_out "${OUT_DIR}/${sample}_merged.fastq.gz"\
+  --adapter_sequence "${ADAPTER_FWD}" \
+  --adapter_sequence_r2 "${ADAPTER_REV}" \
+  --trim_poly_g \
+  --trim_poly_x \
+  --trim_front1 10 \
+  --cut_tail \
+  -w 4 \
+  -l 100 \
+  -q 20 \
+  --merge \
+  -h "${REP_DIR}/parasites/${sample}.html" \
+  -j "${REP_DIR}/parasites/${sample}.json"
+
+fastp \
+  -i "${OUT_DIR}/${sample}_merged.fastq.gz" \
+  -o "${OUT_DIR}/${sample}_merged_250bp.fastq.gz" \
+  -l 250 \
+  --disable_adapter_trimming \
+  --disable_quality_filtering \
+  -w 4 \
+  -h "${REP_DIR}/parasites/${sample}_merged_filter.html" \
+  -j "${REP_DIR}/parasites/${sample}_merged_filter.json"
+
+done
 
 ```
